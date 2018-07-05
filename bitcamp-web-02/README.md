@@ -7,6 +7,27 @@
 ## web-02 : 서블릿
 -서블릿으로 웹 애플리케이션을 만들고 배포하는 방법
 
+##bitcamp 밑에
+
+##패키지 생성
+bitcamp.pms.servlet 패키지생성
+
+
+##회원관리 서블릿 만들기
+- servlet-api 의존 라이브러리 추가
+    - mvnrepository.com에서 sevlet -api 라이브러리 검색
+    - bulid.gradle에 라이브러리 등록
+    - 'gradle eclipse 실행하여 .classpath 갱신
+    - 이클립스 프로젝트 refresh
+-mysql.jdbc.
+
+-bitcamp.pms.servlet.member 패키지 생성
+-MemberListServlet, MemberViewServlet
+
+
+
+
+
 ## web-03 : JDBC 
 - JDBC를 이용하여 데이터를 다루는 방법
 

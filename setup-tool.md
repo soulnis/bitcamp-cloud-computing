@@ -10,7 +10,7 @@
 - scoop install mariadb@10.3.7 OR
 - scoop install mysql 설치
 - scoop install nodejs 설치(node package managment npm 자바스크립트 라이브러리 관리)
-
+-예제는 106기에서 다운받는다.
 
 ## mysql 설정
 '''
