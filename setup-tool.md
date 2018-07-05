@@ -4,12 +4,12 @@
 - eclipse photon (JAVA EE IDE)
 - visual studio code
 - git client
-- scoop(package manager)
-- scoop install gradle
+- scoop(package manager) 
+- scoop install gradle 설치
 - scoop install mariadb
 - scoop install mariadb@10.3.7 OR
-- scoop install mysql
-- scoop install nodejs
+- scoop install mysql 설치
+- scoop install nodejs 설치(node package managment npm 자바스크립트 라이브러리 관리)
 
 
 ## mysql 설정
@@ -107,7 +107,7 @@ mysql> SQL을 복사하여 붙여넣는다.
 java106-java-project를 
 bitcamp-cloud-compting 폴더로 복사한다.
 2.프로젝트 폴더를 이클립스 프로젝트로 만든다.
--파월쉘에서 해당프로젝트로 접근하여
+-파월쉘에서 해당 프로젝트로 접근하여
  'gradle eclipse'를 실행하여 이클립스 설정파일을 생성.
     -.project,.classpath,.settings/ 등이 있어만 이클립스를가 읽을수있는 프로젝트로 인식
 ...
