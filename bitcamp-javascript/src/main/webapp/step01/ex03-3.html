@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>strict모드와 변수선언</h1>
+
+<script type="text/javascript">
+"use strict"
+//"use strict"는 선언된 태그에서만 적용됨.
+//var a;
+//변수의 타입은 값을 넣을때 결정된다.
+a = 100; //a 변수는 number 타입이 된다.
+console.log(a);
+// 변수에 다른 종류의 값을 넣으면 타입이 바뀐다.
+a = "Hello" //a변수는 string타입이 된다.
+console.log(a);
+</script>
+
+<script type="text/javascript">
+c=200; //정상실행 !!
+//이전에 선언된 use strict는 다른 태그에 영향을 미치지 못함.
+console.log(c);
+</script>
+
+</body>
+</html>

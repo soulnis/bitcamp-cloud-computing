@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>script 태그</h1>
+
+<script type="text/javascript">
+//type속성을 생략하면 기본값은  text/javascript 이다
+console.log("Hello");
+</script>
+
+<script type="text/okok">
+ // type 속성이 "text/javascript"가 아닌경우 웹브라우저는
+ // script 태그를 처리하지못한다.
+ // script 태그는 일반 태그처럼 메모리에 로딩만 됨
+ // 화면에 출력되지않는다.
+console.log("Hello2");
+</script>
+
+<scropt>
+ //script태그가 아닌 임의의태그는 브라우저화면에 출력됨
+ console.log("okok");
+</scropt>
+
+</body>
+</html>

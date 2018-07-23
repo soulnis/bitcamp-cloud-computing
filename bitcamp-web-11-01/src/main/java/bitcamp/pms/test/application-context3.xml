@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--  @Autowired를 처리하려면 객체를 생성한후 그작접을 수행할 객체를 컨테이너에 등록해야한다.
+                            등록해 두면 컨테이너가 사용 할 것이다. 
+            BeanPost용어는 빈(객체)를 생성한 후에 작업을해라~               -->
+   <!-- <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> --> 
+    <bean class="bitcamp.pms.test.MyBeanPostProcessor"/>
+    <bean id="memberDao" class="bitcamp.pms.test.MemberDAO"></bean>
+    <bean id="memberListController" class="bitcamp.pms.test.MemberLIstController">
+    </bean>
+
+</beans>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>변수 선언 - 객체에의 변수에 값넣기</h1>
+
+<script type="text/javascript">
+"use strict"
+
+//var a == window.a == window["a"] == window['a'] 모두 같다.
+
+window.a = 100;
+window["b"] =200;
+window['c']=300;
+
+//점(.)을 사용 할때는 변수 이름에 공백이나 특수 문자를 넣을 수 없다.
+//window.first-name= "길동"; 오류!
+//window.first name="길동"; 오류!
+//window.first^^name="길동"; 오류!
+//window.1irstname="길동"; 오류!  일반 변수명으로 숫자를 먼저 쓸 수 없다
+
+//그런데 대괄호를 사용하면 모두 다 사용가능하다.
+window['first-name']="길동" //ok;
+window['first^^name']="길동" //ok;
+window['first name']="길동" //ok;
+window['1stname']="길동" //ok;
+
+
+console.log(window['first-name']);
+console.log(window['first^^name']);
+console.log(window['first name']);
+console.log(window['1stname']);
+
+
+console.log(a);
+console.log(b);
+console.log(c);
+</script>
+
+</body>
+</html>

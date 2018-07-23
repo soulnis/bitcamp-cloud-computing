@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.pms.Dao.ClassroomDAO">
+ 
+  <select id="selectList" resultType="bitcamp.pms.domain.Classroom">
+	 select crno bno,titl title,sdt startTime,edt endTime,room 
+     from pms2_classroom
+  </select>
+  
+  <select id="selectOne" resultType="bitcamp.pms.domain.Classroom" parameterType="int">
+	 select crno bno,titl title,sdt startTime,edt endTime,room 
+	 from pms2_classroom 
+	 where crno=#{value}
+  </select> 
+  
+  <insert id="insert" parameterType="bitcamp.pms.domain.Classroom">
+	 insert into pms2_classroom(titl,sdt,edt,room) 
+	 values(#{title},#{startTime},#{endTime},#{room})
+  </insert>
+  <update id="update" parameterType="bitcamp.pms.domain.Classroom">
+	 update pms2_classroom 
+	 set titl=#{title}, sdt=#{startTime}, edt=#{endTime}, room=#{room} 
+	 where crno=#{bno}
+  </update>
+  <delete id="delete" parameterType="int">
+	 delete 
+	 from pms2_classroom 
+	 where crno=#{value}
+  </delete>
+</mapper>

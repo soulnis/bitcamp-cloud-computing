@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>값의 타입 - typeof 연산자</h1>
+
+<script type="text/javascript">
+//typeof 연산자로 
+//=> 문자열 
+console.log(typeof "문자열"); //string
+console.log(typeof 'Hello'); //string
+// = > 숫자
+console.log(typeof 100); //number
+console.log(typeof 3.14); //number
+// => 논리값 
+console.log(typeof true); //boolean
+console.log(typeof false); //boolean
+
+// => 객체
+console.log(typeof new Object()); //Obejct
+console.log(typeof function() {}); //function
+console.log(typeof null); // Object
+
+// => 상수값
+console.log(typeof undefined); //변수 없음, undefined
+console.log(typeof Infinity); //양의 무한대 number
+console.log(typeof -Infinity); // 음의 무한대 number
+console.log(typeof NaN) // 숫자가 아님을 의미 Number타입에서 숫자가아닐경우 (Not a Number) number
+
+</script>
+
+
+</body>
+</html>

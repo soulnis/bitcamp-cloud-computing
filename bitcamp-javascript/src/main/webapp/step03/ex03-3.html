@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>함수 레펀러스  - 파라미터로 함수 전달하기</h1>
+<script>
+"use strict"
+//함수는 주소는 고정되고 주소만 이동된다.
+function plus(a,b){
+     console.log(a+b);
+}
+function minus(a,b){
+    console.log(a-b);
+}
+function multiple(a,b){
+    console.log(a*b);
+}
+function divide(a,b){
+    console.log(a/b);
+}
+
+
+
+function caller(a){ // 파라미터 a에 함수의주소를 받아보자
+    a(100,200); // 항상 변수에 함수 주소가있으면 일반 함수처럼 호출가능
+}
+
+caller(plus); // caller()를 호출 할 때  plus()함수 의 주소를 전달한다.
+caller(minus); // caller()를 호출 할 때 minus()함수 의 주소를 전달한다.
+caller(multiple); // caller()를 호출 할 때 multiple()함수 의 주소를 전달한다.
+caller(divide); // caller()를 호출 할 때divide()함수 의 주소를 전달한다.
+
+</script>
+
+</body>
+</html>

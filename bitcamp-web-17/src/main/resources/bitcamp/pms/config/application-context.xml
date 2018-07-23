@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+ <!--  컴포넌트스캔을 사용하면 옆에있는것도 포함시킨다.<context:annotation-config/> -->
+ <context:component-scan base-package="bitcamp.pms">
+    <!--bitcamp.pms.test.*은 제외한다.  -->
+    <context:exclude-filter type="regex" expression="bitcamp.pms.test.*"/>
+ </context:component-scan>
+ <!-- jdbc.properties 파일 읽어오기  -->
+<context:property-placeholder location="classpath:bitcamp/pms/config/jdbc.properties"/>
+ 
+ <mvc:annotation-driven enable-matrix-variables="true"/>
+ 
+ <!-- 트랜젝션을 처리할 객체를 등록 -->
+ <tx:annotation-driven transaction-manager="txManager"/>
+
+<!-- 애노테이션이 아닌 AOP를 이용하여 트랜잭션을 관리할 수 있다. -->
+  <!-- 메서드 별로 트랜잭션을 어떻게 적용할 지, 즉 트랜잭션 정책을 설정한다. -->
+  <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+       <tx:method name="selectOne*" read-only="true"/>
+       <tx:method name="selectList*" read-only="true"/>
+       <tx:method name="*"/>
+    </tx:attributes>
+  </tx:advice>
+  
+  <!-- 트랜잭션을 적용할 대상을 설정한다. -->
+  <aop:config>
+      <!-- 트랜잭션을 적용할 대상의 규칙을 선언 서비스패키지에있는 모든 클래스에 모든 패키지 -->
+      <aop:pointcut id="serviceOperation" 
+        expression="execution(* bitcamp.pms.service.*.*(..))"/>
+      
+      <!-- 대상에 대해 어떤 트랜잭션을 적용할 지 설정한다. -->
+      <aop:advisor advice-ref="txAdvice" 
+       pointcut-ref="serviceOperation"/>
+  </aop:config>
+  
+<!-- DB연결 처리  -->
+<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc.driver}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+</bean>
+
+<!-- dataSource 트랜잭션 처리 driver url usernam password 중 하나라도 틀리면 롤백처리하기위해서 -->
+<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+
+
+  <!-- 공장 에서 SqlSessionFactory 만들기
+    => 주의!!
+        - class 속성에 지정된 클래스가 FactoryBean 구현체라면,
+        - 그 객체를 만들어 저장하는 것이 아니라
+        - 그 객체의 getObject()를 호출하면 그 리턴 값을 저장한다.
+   -->   
+ 
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:bitcamp/pms/sql/**/*.xml"></property>
+        <property name="typeAliasesPackage" value="bitcamp.pms.domain"></property>
+    </bean>
+    
+   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="bitcamp.pms.Dao" />
+   </bean>
+   
+   <!-- 기존의 디스패쳐서블릿이 설정한 viewResolver을 internalResourceViewResolver로 교체하기  -->
+   <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    <property name="prefix" value="/WEB-INF/jsp/"/>
+    <property name="suffix" value=".jsp"/>
+</bean>
+</beans>

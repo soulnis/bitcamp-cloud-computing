@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>변수 선언 -글로벌 변수와 window객체</h1>
+
+<script type="text/javascript">
+"use strict"
+
+// script태그에 그냥 선언한 변수는 글로벌 변수.
+// 즉 윈도우객체에 소속된다.
+// window 객체? 웹브라이저에서 제공하는 내장객체
+var a; // 한 번 변수를 선언하면 다음 script태그에서도 사용가능
+a=100;
+
+console.log(a); //window를 생략해도된다
+console.log(window.a); //이렇게 window.a 라고 해도된다.
+
+</script>
+
+<script type="text/javascript">
+//그래서 다른 script태그에서  사용할수 있었던 것이다.
+console.log(a);  
+console.log(window.a);  
+
+//물론 window 객체를 직접 사용하면,
+// 변수 선언없이 변수에 값을 넣을 수 있다.
+window.b =200;
+
+console.log(b);
+console.log(window.b);
+</script>
+
+</body>
+</html>

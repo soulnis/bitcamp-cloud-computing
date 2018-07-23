@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>조건문 - switch</h1>
+<script type="text/javascript">
+var level = 9;
+
+switch(level){
+case 0:
+    console.log("손닙입니다.");
+    break;
+case 1:
+    console.log("회원입니다.");
+    break;
+case 9:
+    console.log("관리자입니다.");
+    break;
+default:
+    console.log("유효하지 않은 등급니다.");
+    break;
+}
+
+</script>
+
+<script type="text/javascript">
+var lavel = "손님";
+
+switch(lavel){
+case "손님":
+    console.log("보기만 가능합니다.");
+    break;
+case "회원":
+    console.log("자신의 게시물에대해 변경가능합나디ㅏ..");
+    break;
+case "관리자":
+    console.log("모두가능합니다.");
+    break;
+default:
+    console.log("유효하지 않은 등급니다.");
+    break;
+}
+
+</script>
+
+<script type="text/javascript">
+var lavel = 1.5; //자바스크립트는 부동소수점 가능
+//자바에서는 무조건  bite,short,char,int와 문자열만 가능하다! 그리고 일레늄레이터
+
+switch(lavel){
+case 1:
+    console.log("1 보기만 가능합니다.");
+    break;
+case 1.5:
+    console.log("1.5 자신의 게시물에대해 변경가능합나디ㅏ..");
+    break;
+case 2:
+    console.log("2 모두가능합니다.");
+    break;
+default:
+    console.log("유효하지 않은 등급니다.");
+    break;
+}
+
+
+</script>
+
+<script type="text/javascript">
+var lavel = false; //자바스크립트는 부동소수점 가능
+
+switch(lavel){
+case true:
+    console.log("ture");
+    break;
+case false:
+    console.log("false");
+    break;
+default:
+    console.log("유효하지 않은 등급니다.");
+    break;
+}
+</script>
+
+
+<script type="text/javascript">
+var value =1; //switch에 다양한 타입의 값이 올 수 있다.
+
+switch(value){
+case true:
+    console.log("ture");
+    break;
+case false:
+    console.log("false");
+    break;
+case 100:
+    console.log("100");
+    break;
+case 3.14:
+    console.log("3.14");
+    break;
+case "홍길동":
+    console.log("홍길동");
+    break;
+default:
+    console.log("유효하지 않은 등급니다.");
+    break;
+}
+</script>
+</body>
+</html>

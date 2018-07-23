@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>변수 선언 - 변수와 블록</h1>
+
+<script type="text/javascript">
+"use strict"
+
+//자바스크립트는 블록을 이용한 범위 제한을 지원하지 않는다.
+
+var a=100;
+
+{
+ var b= 200; //블록안에 선언했다고 로컬변수가 되는것은 아니다.
+}
+
+console.log(a);
+console.log(b);
+</script>
+
+</body>
+</html>

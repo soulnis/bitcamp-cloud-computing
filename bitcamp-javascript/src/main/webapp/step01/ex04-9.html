@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>변수 - 변수 호이스팅(hoisting)</h1>
+<!--  hoisting은 끌어올리다라는 뜻 -->
+<script type="text/javascript">
+"use strict"
+// strict 모드에서는 변수를 선언하지 않고 사용할수없다.
+
+b = 100; // 실행오류;
+
+
+</script>
+
+<script type="text/javascript">
+"use strict"
+
+b=100; //그런데 사용 후에라도 변수를 선언하면 오류가 발생하지않는다;
+var b =200; //헐~~
+
+// 이유는 자바스크립트는 태그를 실행하기전에 자바스크립트 태그에안에 
+// 선언된 모든 변수 선언을 맨앞으로 끌어올려 먼저 실행한다.
+// 즉 b=100;실행하기전에 먼저 var b;를 먼저 실행한다.
+
+// 주의!
+// => 변수 선언과 값 할당하는 문장이 함께 있을 경우에,
+// 변수선언만 끌어 올려지고 할당문은 그자리에 그대로 놓인다.;
+// => 그래서 var b =200; 에서 var b;문장만 먼저 올려가서 실행되고
+//   b =200; 은 그자리에 그대로 놓인다. 
+console.log(b);
+
+
+</script>
+</body>
+</html>

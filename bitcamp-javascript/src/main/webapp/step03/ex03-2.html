@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>함수 레펀러스  - 파라미터로 함수 전달하기</h1>
+<script>
+"use strict"
+
+function f1(){
+     console.log("f1()........");
+}
+
+function caller(a){ // 파라미터 a에 함수의주소를 받아보자
+    a(); // 항상 변수에 함수 주소가있으면 일반 함수처럼 호출가능
+}
+
+caller(f1); // caller()를 호출 할 때  f1()함수 의 주소를 전달한다.
+
+</script>
+
+</body>
+</html>

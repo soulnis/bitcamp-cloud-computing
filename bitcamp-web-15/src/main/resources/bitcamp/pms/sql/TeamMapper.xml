@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.pms.Dao.TeamDAO">
+  
+  <resultMap type="bitcamp.pms.domain.Team" id="TeamMap">
+   <result column="name" property="name"></result>
+   <result column="sdt" property="startTime"></result>
+   <result column="edt" property="endTime"></result>
+   <result column="max_qty" property="maxQty"></result>
+   <result column="dscrt" property="description"></result>
+  </resultMap>
+ 
+  <select id="selectList" resultMap="TeamMap">
+     select name, sdt, edt, max_qty 
+     from pms2_team
+  </select>
+  
+  <select id="selectOne" resultMap="TeamMap" 
+                            parameterType="string">
+     select name,dscrt, sdt, edt, max_qty 
+     from pms2_team 
+     where name=#{value}
+  </select> 
+  
+  <insert id="insert" parameterType="Team">
+    insert into pms2_team(name,dscrt,max_qty,sdt,edt) 
+    values(#{name},#{description},#{maxQty},#{startTime},#{endTime})
+  </insert>
+ 
+  <update id="update" parameterType="Team">
+    update pms2_team 
+    set dscrt=#{description}, max_qty=#{maxQty}, sdt=#{startTime}, edt=#{endTime}
+    where name=#{name}
+  </update>
+ 
+  <delete id="delete" parameterType="string">
+    delete from pms2_team 
+    where name=#{value}
+  </delete>
+</mapper>
