@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>navigator 의 객체 - 윕브라우저 정보  </h1>
+
+
+<script>
+"use strict"
+
+//window.navigator
+//웹브라우저 정보를 다루는 객체
+console.log(window.navigator);
+//web브라우저에 대한 설명 
+console.log(navigator.userAgent);
+// 브라우저에 대한정보를 가져와 각각 브라우저마다 설정을 다르게하거나 걸러낼때 사용한다. 
+if(navigator.userAgent.indexOf("Chrome") != -1){
+    console.log("크롬브라우저");
+} else if(navigator.userAgent.indexOf("safari") != -1){
+    console.log("사파리 브라우저")
+} else if(navigator.userAgent.indexOf("Firefox") != -1){
+    console.log("파이어폭스 브라우저")
+} else {
+    console.log("기타브라우저");
+}
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+button {
+    margin: 20px;
+    height: 30px;
+}
+div[id^='d1'] {
+    margin: 20px;
+    border: 1px solid black;
+}
+div[id^='d11'] {
+    margin: 20px;
+    border: 1px solid red;
+}
+div[id^='d12'] {
+    margin: 20px;
+    border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+<h2>태그의 기본 행위를 막기 - form에 submit 이벤트</h2>
+<form id="form1" action="http://www.daum.net">
+* 이름: <input id="fiName" type="text" name="name"><br>
+* 나이: <input id="fiAge" type="number" name="age"><br>
+전화 :<input id="fiTel" type="text" name="name"><br>
+<button>등록</button><br>
+</form>
+
+
+<script>
+"use strict"
+
+var e = document.querySelector("#form1");
+
+// form 에 소속되었을 떄 button 태그의 type 기본 값은 submit이다.
+// 따라서 type을 지정하지 않으면 submit이기 때문에 조심하라
+// submit은 서버에 요청하는것
+
+form1.onsubmit= function(){
+    if(fiName.value.length == 0 || fiAge.value.length ==0){
+          window.alert("필수 입력 항목을 입력하세요.");
+          return false;          
+      }
+    return true;
+};
+
+
+
+
+</script>
+
+</body>
+</html>

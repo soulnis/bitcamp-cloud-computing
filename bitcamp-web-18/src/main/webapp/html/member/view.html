@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 보기</title>
+</head>
+<body>
+<h1>멤버 보기</h1>
+
+
+
+<form>
+<table border='1'>
+<tr><th>아이디</th><td>
+    <input type='text' id='eId' value='' readonly></td></tr>
+<tr><th>이메일</th>
+    <td><input type='email' id='eEmail' value=''></td></tr>
+<tr><th>암호</th>
+    <td><input type='password' id='ePassword'></td></tr>
+
+</table>
+<p>
+<button type="button" id="eListBtn">목록</button>
+<button id="eUpdateBtn" type="button">변경</button>
+<button id="eDeleteBtn" type="button">삭제</button>
+</p>
+</form>
+
+<script src="../js/common.js"></script>
+
+<script>
+"use strict"
+
+var data = null;
+//객체에서 필요한것만 뽑아내서 변수에 담는방법 분해하는법 계체는 var {}, 배열은 var [];
+var {id,page,size} = parseQuery(location.href);
+
+if(id == undefined){
+    alert("아이디를 지정하지 않았습니다");
+    location.href = "list.html";
+} else {
+	var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+	
+	    if(xhr.readyState < 4) return;
+	    if(xhr.status !== 200){
+	        alert("서버에서 오류발생");
+	        return;
+	    }
+	    //서버의 응답결과가 정상인지 오류인지 확인하는 방법
+	    //status 코드 값을 확인한다.
+	    if(xhr.status == 200){
+	    
+	    data = JSON.parse(xhr.responseText); //JSON은 자바스크립트 객체로 변환해줌
+	    if(data.member == null){
+	        alert('아이다 유효하지 않습니다.');
+	        location.href = 'list.html'
+	        return;
+	    }
+	    eId.value = data.member.id;
+	    eEmail.value = data.member.email;
+	    }
+	};
+	xhr.open('GET',
+	        `../../json/member/view/${id}`
+	        ,true);
+	
+	xhr.send();
+};
+
+eListBtn.onclick = function(){
+    location.href = `list.html?page=${page}&size=${size}`;
+};
+</script>
+</body>
+</html>

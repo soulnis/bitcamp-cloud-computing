@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>location의 객체 - 현재 페이지 정보</h1>
+<input type="text">
+<button onclick="location.reload()">새로고침</button>
+
+<script>
+"use strict"
+// window.location 현재 페이지의 정보를 다루는 객체
+window.console.log(location); // window 생략가능
+window.console.log("href",location.href);
+window.console.log("origin",location.origin);
+window.console.log("protocol",location.protocol);
+window.console.log("host",location.host);
+window.console.log("hostname",location.hostname);
+window.console.log("port",location.port);
+window.console.log("pathname",location.pathname);
+
+//path에서 정보 가져오기
+var str = location.pathname;
+var str2 = str.split('/');
+ console.log(str2);
+ 
+//자바스크립트에서 새고로침 방법
+//1) window.location.reload(); 
+//2) history.go(0)
+//3) window.location.href=window.location.href
+
+</script>
+
+</body>
+</html>

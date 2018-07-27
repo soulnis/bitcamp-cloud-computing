@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+button {
+    margin: 20px;
+    height: 30px;
+}
+div[id^='d1'] {
+    margin: 20px;
+    border: 1px solid black;
+}
+div[id^='d11'] {
+    margin: 20px;
+    border: 1px solid red;
+}
+div[id^='d12'] {
+    margin: 20px;
+    border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+<h2>이벤트 전달 단계(버블링) - 전달 순서 </h2>
+<div id="d1">d1
+    <div id="d11">d11
+        <button id="btn1">버튼1</button>
+        <button id="btn2">버튼2</button>
+    </div>
+</div>
+
+<script>
+"use strict"
+
+
+
+d1.onclick =() => console.log("d1");
+d11.onclick =() => console.log("d11");
+ 
+// 만약 한태그에 여러개의 리스너가 등록되어있다면?
+btn1.addEventListener("click",(event) => {
+    //stopPropagation()은 분명히 버블링을 멈추라는 명령이다.
+    // 따라서 target 단계 리스너는 모두 실행된다.
+    event.stopPropagation(); //버블링을 멈추는 명령어
+    console.log("Btn1" )});
+btn1.addEventListener("click",(event) => {
+    console.log("Btn1....2" )});
+btn1.addEventListener("click",(event) => {
+    console.log("Btn1.....3" )});
+
+btn2.addEventListener("click",(event) => {
+   // 만약 현제 리스너까지만 실행되게 하고 싶다면,
+   // stopImmediatePropagation()을 호출하라!
+    event.stopImmediatePropagation();
+    console.log("Btn2" )});
+btn2.addEventListener("click",(event) => {
+    console.log("Btn2....2" )});
+btn2.addEventListener("click",(event) => {
+    console.log("Btn2.....3" )});
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+img{
+    height: 80px;
+}
+
+
+</style>
+</head>
+<body>
+<h2>DOM API - 속성 변경</h2>
+<div id="d1">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQCe8Jy9sROxOeUdVRUXI8U0dnboHidvdk5VeYvcUyGZB_KymD-Q">
+<img src="http://img.seoul.co.kr/img/upload/2018/07/20/SSI_20180720180103_V.jpg">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPFUP7m-sBRPlcR_Opgdggv5fx3S4oZa_iX5TCotpM3t_gb0ymiw">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpCiPpfnIQKD8MkjeItI85EcKOEwkwM1BsPkgBnM2M-T0DLMrW">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9jgsT5nTKogMJx3NgTrpMzbPAas3jq8bWxrgjGBYgqeHQsPrH">
+</div>
+<script>
+"use strict"
+
+var tid = setInterval(()=>{
+    
+    var e = document.querySelector("#d1 > img:first-child");
+    
+    
+    if( e == null){
+     clearInterval(tid); //tid = setInterval()을 종료 함
+     } 
+    
+    d1.removeChild(e);
+},2000)
+
+</script>
+
+</body>
+</html>

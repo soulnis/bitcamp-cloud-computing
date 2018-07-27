@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+img{
+    height: 80px;
+}
+
+
+</style>
+</head>
+<body>
+<h2>이벤트 객체- 키 이벤트 정보 추출하기</h2>
+<div id="d1">
+<button id="btn1"> 버튼 1 </button><br>
+<textarea  id="txt1" rows="5" cols="5"></textarea>
+<span id="txtCnt">0</span>/140<br>
+</div>
+<script>
+"use strict"
+// =>  keydown 이벤트는 key값이 화면에 입력되기전에 발생
+// =>  모든키에 대해 이벤트가 발생한다
+txt1.onkeydown = function(event){
+    console.log("onkeydown");
+   // txtCnt.innerHTML = txt1.value.length;
+};
+// =>  keypress 이벤트는 key값이 화면에 입력되기전에 발생
+// =>  text키에 대해서  발생한다. 
+//     기타 KEY에 대해서는 이벤트가 발생하지 않는다.ex) backspace,방향키등
+
+txt1.onkeypress = function(event){
+    console.log("onkeypress");
+    txtCnt.innerHTML = txt1.value.length;
+};
+
+// keyup 이벤트는 key 화면에 출력되고 key값을 띄었을떄 출력된다.
+// => 모든키에 대해 이벤트가 발생한다
+txt1.onkeyup = function(event){
+    console.log("onkeyup");
+   // txtCnt.innerHTML = txt1.value.length;
+};
+
+// => 입력상자의 값이 변경 되었을 떄 발생한다.
+//    opinput 이벤트는 key 값이 화면에 출력된 후 발생한다.
+//    가장 많이 사용하는 이벤트 중 하나!
+txt1.oninput = function(event){
+    console.log("oninput");
+  //  txtCnt.innerHTML = txt1.value.length;
+};
+
+
+</script>
+
+</body>
+</html>

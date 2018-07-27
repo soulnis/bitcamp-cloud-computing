@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+button {
+    margin: 20px;
+    height: 30px;
+}
+div[id^='d1'] {
+    margin: 20px;
+    border: 1px solid black;
+}
+div[id^='d11'] {
+    margin: 20px;
+    border: 1px solid red;
+}
+div[id^='d12'] {
+    margin: 20px;
+    border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+<h2>태그의 기본 행위를 막기 -a 태그 </h2>
+<a id="a1" href="http://www.daum.net">다음</a><br>
+<a id="a2" href="http://www.naver.net">네이버</a><br>
+<script>
+"use strict"
+// a태그의 기본행위
+// => a 태그를 클릭하면 href에 지정된 url을 요청하게 한다.
+// 
+a1.onclick = function(event){
+    console.log("a1 클릭");
+}
+a2.onclick = function(event){
+    // a 태그를 버튼으로 사용하기위해  
+    // a 태그의 기본 행위를 막고 싶다면??
+    event.preventDefault();
+    console.log("a2 클릭");
+}
+</script>
+
+</body>
+</html>

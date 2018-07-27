@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>arrow 함수 - 값 리턴 </h1>
+<script>
+"use strict"
+
+// 보통 값을 리턴 할때에는 return 키워드를 사용하여 값을 리턴한다.
+var f1 = (a,b) => {
+ return a + b;
+};
+console.log("합계:",f1(1,2));
+
+// Arrow 함수안에 결과를 리턴하는 한 문장만 있다면
+// return 키워드를 생략해도된다.
+// 단 중괄호를 생략해야한다.
+// => 중괄호로 묶는다면 반드시 return 키워드를 사용해야한다.
+var f2 = (a,b) => a + b;
+
+console.log("합계:",f2(1,2));
+</script>
+
+</body>
+</html>

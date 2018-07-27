@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>객체 프로퍼티 - {}의 매서드(함수)프로퍼티 추가하는 또다른 방법</h1>
+<script>
+"use strict"
+
+//객체를 만드는 단축 표기법 일뿐이다.
+var obj2 ={
+        result: 0,
+        plus(value) {this.result += value;}, // plus : function(value){this.result += value;};와같다.
+        minus(value) {this.result -= value;} // minus : function(value){this.result -= value;};와같다.
+};
+
+obj2.plus(10);
+obj2.plus(5);
+obj2.minus(7);
+
+console.log(obj2.result);
+
+</script>
+
+</body>
+</html>

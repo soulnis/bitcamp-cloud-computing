@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>객체생성 - 생성자 연결2</h1>
+<script>
+"use strict"
+//상속이라 부르지 않고 constructor chain이라 부른다 
+function A(){}
+A.prototype.f1 = function() {console.log("A->f1()....")};
+
+function B(){}
+B.prototype = new A();
+B.prototype.constructor = B;
+B.prototype.f2 = function() {console.log("B->f2()....")};
+
+function C(){}
+C.prototype = new B();
+C.prototype.constructor = C;
+C.prototype.f3 = function() {console.log("C->f3()....")};
+
+function D(){}
+D.prototype = new C();
+D.prototype.constructor = D;
+D.prototype.f4 = function() {console.log("D->f4()....")};
+
+var obj = new D();
+obj.f4();
+obj.f3();
+obj.f2();
+obj.f1();
+//상속받은 매서드들은 모두 자식이 사용가능하다 확장하는 개념~
+console.log(obj);
+
+</script>
+
+</body>
+</html>

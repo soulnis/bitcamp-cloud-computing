@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style>
+#resultDiv{
+    height: 200px;
+    border: 1px solid red;
+}
+
+</style>
+</head>
+<body>
+<h2>AJAX  동기 방식의 문제점을 비동기식 방식으로해결</h2>
+<input id="iA" type="text">
+<select id="iOp">
+    <option value="%2B">+</option> <!-- +는 공백으로 처리하기떄문에 아스키코드로 %2B 로 보내야한다.  -->
+    <option>-</option>
+    <option>*</option>
+    <option>/</option>
+</select>
+<input id="iB" type="text">
+<button id="btn1">계산하기</button>
+<div id="resultDiv"></div>
+<script>
+"use strict"
+
+
+btn1.onclick = function(){
+   
+    //서버에서 응답으왔을때 출력한다.
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','ex01-3.jsp?a='+iA.value +'&op='+iOp.value+'&b='+iB.value,true);
+   
+    xhr.onreadystatechange = function(aa,bb){
+        console.log(aa);
+        console.log(bb);
+
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200){
+            alert("서버에서 오류발생");
+            return;
+        }
+        //서버의 응답결과가 정상인지 오류인지 확인하는 방법
+        //status 코드 값을 확인한다.
+        if(xhr.status == 200){
+        console.log(xhr.responseText);
+        resultDiv.innerHTML = xhr.responseText; 
+        } 
+        }
+     
+    xhr.send();
+    // 비동기 요청에서는 send() 호출한후 바로 리턴한다
+    // 따라서 동기 요청 떄처럼 화면이 벽돌이 되는 상황을 피할 수 있다.
+    
+    
+};
+
+
+</script>
+
+</body>
+</html>

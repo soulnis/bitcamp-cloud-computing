@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+.strong{
+    font-weight: bolder;
+    background-color: black;
+    color: white;
+}
+</style>
+</head>
+<body>
+<h2>DOM API - 속성 변경</h2>
+
+<h1>제목1</h1>
+<h1>제목2</h1>
+<h1>제목3</h1>
+<h1>제목4</h1>
+
+<script>
+"use strict"
+
+var a=function(callback){
+    var p=101
+    callback(p);
+};
+
+a(function(p){ 
+    var a = p;
+setTimeout((a)=>console.log("지정된 시간이 경과한 딱 한번만 호출됨",a),5000)
+});
+// var result = a();
+// var els = result.split("."))
+// 등록된함수에 결과값(요청에대한 응답값)을가지고 처리한다. 
+console.log(5);
+
+
+</script>
+
+</body>
+</html>

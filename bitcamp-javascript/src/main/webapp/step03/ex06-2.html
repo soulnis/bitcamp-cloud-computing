@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>arrow 함수 - 파라미터 다루기 </h1>
+<script>
+"use strict"
+
+// 파라미터를 선언하지 않은 경우 ()가 필수
+var f1 = () => {
+    console.log("hello");
+};
+
+//파라미터가 한개인 경우
+var f2 = (a) => {
+    console.log(a);
+};
+
+//파라미터가 한개인 경우, 파라미터 괄호() 생각 가능
+var f3 = a => {
+    console.log(a);
+};
+
+//파라미터가 여러개인경우,여러개의 경우 괄호()생략 불가
+var f4= (a,b,c) =>{
+   console.log(a,b,c);  
+};
+
+f1();
+f2(100);
+f3(200);
+f4(100,200,300);
+
+</script>
+
+</body>
+</html>

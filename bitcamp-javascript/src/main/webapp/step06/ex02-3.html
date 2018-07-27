@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+div{
+    border: 1px solid red;
+    margin: 10px 20px 30px 40px;
+}
+#d1{
+    height: 200px;
+}
+#d2{
+    height: 200px;
+}
+</style>
+</head>
+<body>
+<h2>DOM API - 태그생성 속성 설정하기2</h2>
+<div id ="d1"></div>
+<div id ="d2"></div>
+
+<script>
+"use strict"
+//자바스크립트로 태그를 제어하기위해 
+// 태그에 임의로 새 속성을 추가하는 경우가 있다.
+// 이때 새 속성과 태그에 원래 있던 속성이 충돌하지 않도록 하기위해서 
+// 즉 새 속성의 이름이 기존태그의 이름과같지않도록하기위해서
+// 새 속성에 이름은 "data-xxx" 식으로 작성할 것을 HTML명세서에서는 권고한다.
+
+//방법 1) 원래 그 태그에 있던 속성이면 바로 속성명으로 값을 설정할 수있다.
+var e1 = document.createElement("a");
+e1.href ="http://www.daum.net";
+e1.innerHTML ="다음 카카오";
+
+//a 태그에 새 속성을 추가해보자.!
+//e1.data-no = 100; //속성명에 '-' 가 있으면 "객체.속성명" 문법을 사용 할 수 없다.
+e1["data-no"] = 100;
+
+// 이 방식은 객체에 프로퍼티를 추가하는 것이다.
+// => 당연히 객체에 해당 프로퍼티가 들어있는지 hasOwnProperty()로 확인할수 있다
+console.log(e1.hasOwnProperty("data-no"));
+
+// => getAttribute()는 setAttribute()로 등록한 태그 속성만 조회 할 수 있다.
+console.log(e1.getAttribute("data-no"));
+// => selector에서는 태그 객체의 프로퍼티가 아니라 태그 속성을 사용 한다.
+// => 따라서 위에서 등록한 e1["data-no"]로 등록한것은 태그의 속성이아니라 객체의 프로퍼티이기때문에
+// => seletor문법에서 사용할 수 없다.
+console.log(document.querySelector("#d2 > a[data-no='100']"));
+
+//태그 아이디 d2 는 window객체에 저장된다. 
+d2.appendChild(e1);
+
+console.log("================================================================");
+
+//방법 2)
+var e2 = document.createElement("a");
+e2.setAttribute("href","http://www.naver.com");
+e2.innerHTML = "네이버";
+
+//a 태그에 새 속성을 추가해보자.!
+//e1.data-no = 100; //속성명에 '-' 가 있으면 "객체.속성명" 문법을 사용 할 수 없다.
+e2.setAttribute("data-no","100");
+
+//setAttribute()는 객체의 프로퍼티가 아니라 태그의 속성을 추가한다.
+
+// 객체의 프로퍼티를 찾는 hasOwnProperty()로는 해당 속성을 찾을 수 없다.
+console.log(e2.hasOwnProperty("data-no"));
+
+// 그러나 태그속성을 찾는 getAttribute()에서는 찾을 수 있다.
+console.log(e2.getAttribute("data-no"));
+// 태그의 속성이기 때문에 selector를 사용 할 수 있다.
+console.log(document.querySelector("#d1 > a[data-no='100']"));
+d1.appendChild(e2);
+
+// 보통 태그에 속성을 추가 할 때는 UI제어 하려는 것이다.
+// 자바스크립트에서 UI를 제어한다는 것은 selector를 이용하여
+// 해당 태그를 찾아서 처리하는 것을 말한다.
+// 그러니 태그에 속성을 추가 할 떄 는 반드시 setAttribute()을 사용하라!
+</script>
+
+</body>
+</html>

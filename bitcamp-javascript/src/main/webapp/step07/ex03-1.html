@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+img{
+    height: 80px;
+}
+
+
+</style>
+</head>
+<body>
+<h2>프로그래밍으로 이벤트 발생시키기 - 클릭 이벤트 발생!!</h2>
+<div id="d1">
+
+<span id="txt1">이벤트 발생시키기</span>
+<button id="btn1"> 버튼 1 </button><br>
+</div>
+<script>
+"use strict"
+
+
+btn1.onclick = function(event){
+    console.log("버튼 눌렀음");
+
+};
+
+txt1.onclick = function(){
+    console.log('텍스트 눌렀음');
+    //1) 발생시킬 이벤트 객체를 준비한다.
+    var e = new MouseEvent("click");
+    //2) 이벤트가 발생할 대상 객체에 대해 dispatchEvent()를 호출 한다. 영어해석)이벤트를 btn1에게 배달하다,급파하다
+    btn1.dispatchEvent(e);
+    
+};
+
+
+</script>
+
+</body>
+</html>

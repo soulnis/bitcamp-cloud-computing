@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+button {
+	margin: 20px;
+	height: 30px;
+}
+div[id^='d1'] {
+    margin: 20px;
+    border: 1px solid red;
+}
+div[id^='d2'] {
+    margin: 20px;
+    border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+<h2>이벤트 전달 단계(버블링) - 전달 순서 </h2>
+<div id="d1">d1
+    <div id="d11">d11
+        <button id="btn1">버튼1</button>
+        <button id="btn2">버튼2</button>
+    </div>
+    <div id="d12">d12
+        <button id="btn3">버튼3</button>
+        <button id="btn4">버튼4</button>
+    </div>
+</div>
+
+<div id="d2">d2
+    <div id="d21">d21
+        <button id="btn5">버튼5</button>
+        <button id="btn6">버튼6</button>
+    </div>
+    <div id="d22">d22
+        <button id="btn7">버튼7</button>
+        <button id="btn8">버튼8</button>
+    </div>
+</div>
+<script>
+"use strict"
+
+// 이벤트 전달 단계
+// 1) capture phase
+// => 부모 태그에서 내려오는 단계
+// 2) target phase
+// => 목적지에 도착한단계
+// 3) bubble phase
+// => 거꾸로 부모 태그로 따라 올라가는 단계
+
+//보통 다음과 같이 일반적인 방법으로 리스너를 등록하면
+//해당 리스너는  target 또는 bubble  단계일 때 호출된다.
+
+
+d1.onclick =() => console.log("d1");
+d11.onclick =() => console.log("d11");
+d12.onclick =() => console.log("d12");
+
+d2.addEventListener("click", () => console.log("d2"));
+d21.addEventListener("click",() => console.log("d21"));
+d22.addEventListener("click",()=> console.log("d22"));
+
+
+btn1.onclick =() => { console.log("Btn1" )};
+btn2.onclick =() => console.log("Btn2");
+btn3.onclick =() => console.log("Btn3");
+btn4.onclick =() => console.log("Btn4");
+btn5.addEventListener("click", () => console.log("Btn5"));
+btn6.addEventListener("click", () => console.log("Btn6"));
+btn7.addEventListener("click", ()=> console.log("Btn7"));
+btn8.addEventListener("click", () => console.log("Btn8"));
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>location의 객체 - url에서 값 추출하기 </h1>
+
+
+<script>
+"use strict"
+
+//테스트 주소: http://localhost:8080/bitcamp-javascript/step05/ex03-3.html?no=20&name=aaa&age=20
+//자주사용함 알아둬라!~!! 
+//get방식으로 넘어온 데이터를 가져와서 파싱하는 방법
+var values = location.href.split("?")[1];
+var params = values.split("&");
+console.log(params);
+for(var value of params){
+    var kv = value.split('=')
+    console.log("키:",kv[0],"값:",kv[1]);
+}
+
+
+
+</script>
+
+</body>
+</html>

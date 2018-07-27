@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style>
+#resultDiv{
+    height: 200px;
+    border: 1px solid red;
+}
+
+</style>
+</head>
+<body>
+<h2>AJAX  동기 요청 - 계산기</h2>
+<input id="iA" type="text">
+<select id="iOp">
+    <option>%2B</option> <!-- +는 공백으로 처리하기떄문에 아스키코드로 %2B 로 보내야한다.  -->
+    <option>-</option>
+    <option>*</option>
+    <option>/</option>
+</select>
+<input id="iB" type="text">
+<button id="btn1">계산하기</button>
+<div id="resultDiv"></div>
+<script>
+"use strict"
+
+
+btn1.onclick = function(){
+   
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','ex01-3.jsp?a='+iA.value +'&op='+iOp.value+'&b='+iB.value,false);
+    
+    xhr.send();
+    // 서버에 요청한 후 서버에 응답을 완료할 때까지 send()리턴을 하지않는다.
+    // 따라서 화면은 사용자의 행위에 아무런 반응을 하지못하는 벽돌 상태가 된다.
+    
+    console.log(xhr.responseText);
+    resultDiv.innerHTML = xhr.responseText;
+    
+};
+
+
+</script>
+
+</body>
+</html>

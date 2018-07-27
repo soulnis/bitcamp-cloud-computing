@@ -31,12 +31,11 @@ printArray(arr);
 printArray(arr2);
 
 //배열을 편집하기
-var arr3 = arr.splice(1,2); //1번부터 2개를 삭제하기 파괴매서드
-
-
 console.log("[3]=====================");
-printArray(arr3); // => 리턴값은 삭제한 항목의 배열이다.
-printArray(arr);  // 삭제한 항목을 제외한 나머지 배열이다.
+var arr3 = arr.splice(1,2); //1번부터 2개를 삭제하기 파괴매서드
+printArray(arr3); // => 리턴값은 삭제한 항목의 배열이다. 200,300
+printArray(arr);  // 삭제한 항목을 제외한 나머지 배열이다. 100,400,500
+//arr의 값이 변한것을 알수있다 파괴적 매서드
 
 
 //배열을 삽입하기

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+<style type="text/css">
+button {
+    margin: 20px;
+    height: 30px;
+}
+div[id^='d1'] {
+    margin: 20px;
+    border: 1px solid red;
+}
+div[id^='d2'] {
+    margin: 20px;
+    border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+<h2>이벤트 전달 단계(버블링) - capture 단계에서 이벤트 처리하기 </h2>
+<div id="d1">d1
+    <div id="d11">d11
+        <button id="btn1">버튼1</button>
+        <button id="btn2">버튼2</button>
+    </div>
+    <div id="d12">d12
+        <button id="btn3">버튼3</button>
+        <button id="btn4">버튼4</button>
+    </div>
+</div>
+
+<div id="d2">d2
+    <div id="d21">d21
+        <button id="btn5">버튼5</button>
+        <button id="btn6">버튼6</button>
+    </div>
+    <div id="d22">d22
+        <button id="btn7">버튼7</button>
+        <button id="btn8">버튼8</button>
+    </div>
+</div>
+<script>
+"use strict"
+
+// capure 단계에서 리스너가 호출되도록 하려면,
+// onxxx = function(){} 방식으로 처리불가
+// addEventListener()로 호출할 떄만 가능하다
+// 방법:
+//  => e.addEventListener("이벤트명",function(){},캡쳐여부)
+d1.onclick =() => console.log("d1");
+d11.onclick =() => console.log("d11");
+d12.onclick =() => console.log("d12");
+
+//d2와 d21은 켭쳐단계에서 호출되도록 리스너를 등록함
+//3번쨰 파라미터 값이 true면 capture와 target 단계에서 호출하라는 의미이다.
+d2.addEventListener("click", () => console.log("d2"),true);
+d21.addEventListener("click",() => console.log("d21"),true);
+//d22은 기본상태의 타켓 또는 버블링 호출 될 것이다. 
+d22.addEventListener("click",() => console.log("d22"));
+
+
+btn1.onclick =() => { console.log("Btn1" )};
+btn2.onclick =() => console.log("Btn2");
+btn3.onclick =() => console.log("Btn3");
+btn4.onclick =() => console.log("Btn4");
+btn5.addEventListener("click", () => console.log("Btn5"));
+btn6.addEventListener("click", () => console.log("Btn6"));
+btn7.addEventListener("click", () => console.log("Btn7"));
+btn8.addEventListener("click", () => console.log("Btn8"));
+
+
+</script>
+
+</body>
+</html>

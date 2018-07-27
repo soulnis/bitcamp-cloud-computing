@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>arrow 함수 - default 파라미터와 rest파라미터 다루기 </h1>
+<script>
+"use strict"
+
+//default parameter
+var f1 = (a,b=200,c) => {
+ console.log(a,b,c)
+}
+f1(15);
+
+//default parameter + single parameter  
+//싱글이라도  소괄호()가 꼭있어야함
+var f2 = (a=200)=> {
+ console.log(a)
+}
+f2();
+//rest parameter 파라미터의 맨뒤 선언해야함, 배열처리!
+var f3 = (a,...x)=> {
+    console.log(a);
+    console.log(x[0]);
+    console.log(x[1]);
+    console.log(x[2]);
+   }
+f3(100,200,300);
+
+</script>
+
+</body>
+</html>

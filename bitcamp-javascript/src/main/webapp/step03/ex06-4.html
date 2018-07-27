@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트</title>
+</head>
+<body>
+<h1>arrow 함수 - 함수 body </h1>
+<script>
+"use strict"
+
+//여러 문장일 경우 중괄호로 묶어야 한다.
+var f1 = (a,b) => {
+ console.log(a,b);
+ console.log("합계 :");
+ console.log(a+b);
+}
+f1(1,2);
+
+//구현부가 한문장일경우 중괄호를 생략가능하다.
+var f2 = (a,b) => console.log("합계:",a+b);
+
+f2(1,2);
+</script>
+
+</body>
+</html>
