@@ -1,0 +1,6 @@
+
+plugins {   
+    //이클립스를 읽기위해서 elcipse가 필요하다 .project폴더 생성을위해서 그래들러에서 생성
+    id 'eclipse'
+}
+

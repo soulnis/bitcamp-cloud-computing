@@ -3,6 +3,10 @@
 <head>
 <meta charset='UTF-8'>
 <title>멤버 보기</title>
+<style type="text/css">
+
+</style>
+
 </head>
 <body>
 <h1>멤버 보기</h1>
@@ -21,8 +25,9 @@
 </table>
 <p>
 <button type="button" id="eListBtn">목록</button>
-<button id="eUpdateBtn" type="button">변경</button>
-<button id="eDeleteBtn" type="button">삭제</button>
+<button id="eAddBtn" type="button" class="newform">등록</button>
+<button id="eUpdateBtn" type="button" class="viewform">변경</button>
+<button id="eDeleteBtn" type="button" class="viewform">삭제</button>
 </p>
 </form>
 
@@ -35,11 +40,22 @@ var data = null;
 //객체에서 필요한것만 뽑아내서 변수에 담는방법 분해하는법 계체는 var {}, 배열은 var [];
 var {id,page,size} = parseQuery(location.href);
 
-if(id == undefined){
-    alert("아이디를 지정하지 않았습니다");
-    location.href = "list.html";
-} else {
-	var xhr = new XMLHttpRequest();
+
+if(id == undefined){// 입력 폼
+    var el = document.querySelectorAll('.viewform');
+    for (var  e of el){
+        e.style.display = 'none';
+    } 
+    eId.removeAttribute('readonly');
+} else { // 상세보기 폼
+    var el = document.querySelectorAll('.newform');
+    
+    for (var e of el){
+        e.style.display = 'none';
+    } 
+   
+	
+    var xhr = new XMLHttpRequest();
 	
 	xhr.onreadystatechange = function(){
 	
@@ -70,8 +86,98 @@ if(id == undefined){
 };
 
 eListBtn.onclick = function(){
-    location.href = `list.html?page=${page}&size=${size}`;
+   
+    if(page){
+        console.log(1);
+        location.href = `list.html?page=${page}&size=${size}`;
+    }else{
+        console.log(2);
+        location.href = 'list.html';
+    }
 };
+
+eUpdateBtn.onclick = function(){
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function(){
+    
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200){
+            alert("서버에서 오류발생");
+            return;
+        }
+        //서버의 응답결과가 정상인지 오류인지 확인하는 방법
+        //status 코드 값을 확인한다.
+        if(xhr.status == 200){
+        
+            let data = JSON.parse(xhr.responseText); //JSON은 자바스크립트 객체로 변환해줌
+            if(data.status == 'success'){
+                location.href = `list.html?page=${page}&size=${size}`;
+            } else {
+                alert('변경 오류입니다.');
+                console.log(data.error);
+            }
+        }
+    };
+    xhr.open('POST', '../../json/member/update',true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
+};
+
+eDeleteBtn.onclick = function(){
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function(){
+    
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200){
+            alert("서버에서 오류발생");
+            return;
+        }
+        //서버의 응답결과가 정상인지 오류인지 확인하는 방법
+        //status 코드 값을 확인한다.
+        if(xhr.status == 200){
+        
+            let data = JSON.parse(xhr.responseText); //JSON은 자바스크립트 객체로 변환해줌
+            if(data.status == 'success'){
+                location.href = `list.html?page=${page}&size=${size}`;
+            } else {
+                alert('삭제 오류입니다.');
+                console.log(data.error);
+            }
+        }
+    };
+    xhr.open('GET'
+            , `../../json/member/delete?id=${eId.value}`
+            // ,'test.jsp' 프론트 에서 테스트하는방법 jsp를 만들어서 테스트해본다.      
+            ,true);
+    xhr.send();
+};
+
+eAddBtn.onclick = function(){
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onreadystatechange = function(){
+    
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200){
+            alert("서버에서 오류발생");
+            return;
+        }
+        //서버의 응답결과가 정상인지 오류인지 확인하는 방법
+        //status 코드 값을 확인한다.
+        if(xhr.status == 200){
+            location.href = 'list.html';
+        }
+    };
+    
+    xhr.open('POST', '../../json/member/add',true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send(`id=${eId.value}&email=${eEmail.value}&password=${ePassword.value}`);
+};
+
+
+
 </script>
 </body>
 </html>

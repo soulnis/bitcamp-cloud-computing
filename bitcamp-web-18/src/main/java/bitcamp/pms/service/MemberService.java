@@ -42,8 +42,8 @@ public class MemberService {
        //단위 처리이다보니 update가 성공 후 에 오류가 발생해서 다시 그전에 작업까지 모두 롤백된다.
         int count = memberdao.update(member);
 
-        if (count != 100)
-            throw new RuntimeException("일부로 예외 발생!");
+      /*  if (count != 100)
+            throw new RuntimeException("일부로 예외 발생!");*/
         
         return count;
     }

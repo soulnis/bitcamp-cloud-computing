@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+<title>Tic-Tac-Toe</title>
+<style>
+table { 
+    border: 2px solid gray;
+    width: 300px;
+    height: 100px;
+}
+
+td {
+    text-align:center;
+    font-family:fantasy;
+    font-size:20px;
+    width : 50px;
+    height : 50px;
+    border: 2px solid #444444;
+}
+
+</style>
+</head>
+<body>
+<table id="table">
+
+</table>
+
+<div id="count"> </div>
+
+</body>
+<script type="text/javascript">
+"use strict"
+
+var count = 0;
+var arr2= []; //빈 배열 체크할 변수 배열
+//3x3 배열
+for(var x = 0;x < 3;x++){
+	 arr2[x] = new Array(3);
+	 for(var y = 0;y < 2;y++){
+	 };
+};
+
+for(var i = 0; i < 3;i++){
+  var tr = document.createElement('tr');
+  tr.class= tr;
+
+  for(var j = 0;j < 3;j++){
+      tr.innerHTML += `<td id='tr${count+1}' data-x='${i}' data-y='${j}'class='tr tr2'></td>`;
+      count++;
+  }
+      table.appendChild(tr);
+}
+
+table.addEventListener("click",addInput);
+var arr =[];
+
+function random(e){
+    
+    //이벤트리스너 삭제
+    table.removeEventListener("click",addInput);
+    
+    setTimeout(function(){
+       
+        var el = document.querySelectorAll('.tr2');
+        if(el.length == 0){
+            alert('무승부입니다.');
+            history.go();
+            return;
+        }
+        var enemy = el[Math.floor(Math.random() * el.length)];
+      
+        /* 내가만든 소스
+        while(true){
+        var number = Math.floor(Math.random()*9+1);
+        var enemy = document.querySelector('#tr'+number);
+            if(enemy.innerHTML != 'x' && enemy.innerHTML != 'o'){
+                break;
+            }
+            
+            if(document.querySelectorAll('.tr2').length == 0){
+                alert('무승부');                
+                break;
+            }
+        }   */
+        
+        enemy.innerHTML = 'o'; 
+        enemy.style.color = 'red';
+        arr2[enemy.dataset.x][enemy.dataset.y] = 1;
+        enemy.classList.remove('tr2'); //태그를 삭제함으로써 9개칸을 다 삭제되면 더이상 못하게만듬
+        check(1);
+        table.addEventListener("click",addInput);
+    },2000);
+}
+ 
+function addInput(e){
+    
+    if(event.target.id == 'table' || event.target.class == 'tr')
+        return;
+    if(event.target.innerHTML == 'x' || event.target.innerHTML == 'o' ){
+        return;
+    }
+    var e = event.target;
+    arr2[e.dataset.x][e.dataset.y] = 0;
+    e.innerHTML = 'x';
+    e.classList.remove('tr2');
+    e.style.color = 'blue';
+    check(0);
+    
+    random(e);
+}
+ 
+
+ function check(number){
+     var gCnt = 0;  //가로 체크 
+     var sCnt = 0;  //세로 체크
+     var cCnt = 0;  //정슬러쉬
+     var cCnt2 =0;  //역슬러쉬
+
+     for(var i=0; i< arr2.length; i++){
+         gCnt =0; // 한줄에 없으면 빙고가아니므로 리셋함
+         sCnt =0; // 세로줄에 없으면 빙고가 아니므로 리셋함
+         for(var j = 0;j < arr2.length;j++){
+             if(arr2[i][j] == number) //가로체크
+                 gCnt++;
+             if(arr2[j][i] == number) //세로체크
+                 sCnt++;
+             if( i == j && arr2[i][j] == number) //정가로체크
+                 cCnt++;
+             if(i+j == 2 && arr2[i][j] == number) //역가로 체크
+                 cCnt2++;
+         }
+         
+         if(gCnt == 3){
+             if(number == 0)
+             alert("플레이어승");
+             else 
+             alert("컴퓨터승");    
+             history.go();
+         }
+            
+         if(sCnt == 3){
+             if(number == 0)
+             alert("플레이어승");
+             else 
+             alert("컴퓨터승"); 
+             history.go();
+         }
+     }
+     
+     if(cCnt == 3){
+         if(number == 0)
+         alert("플레이어승");
+         else 
+         alert("컴퓨터승");
+         history.go();
+         
+     }
+     if(cCnt2 == 3){
+         if(number == 0)
+         alert("플레이어승");
+         else 
+         alert("컴퓨터승");
+         history.go();
+     }
+ }
+
+</script>
+</html>

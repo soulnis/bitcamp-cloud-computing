@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+<!-- <request-character-encoding>UTF-8</request-character-encoding> -->
+   <filter>
+           <filter-name>encoding</filter-name>
+          <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+           <init-param>
+                <param-name>encoding</param-name>
+                <param-value>UTF-8</param-value>
+           </init-param>
+     </filter>
+    
+     <filter-mapping>
+           <filter-name>encoding</filter-name>
+           <url-pattern>/*</url-pattern>
+     </filter-mapping>
+
+    <!-- contextLoaderListener 생성 스프링  -->
+   <!--  컨텍스트 로더 설정 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:bitcamp/pms/config/application-context.xml</param-value>
+    </context-param>
+    
+    <!--디스패쳐 서블릿설정  -->
+	 <servlet>
+        <servlet-name>app</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <!--설정이 저장된 곳 을 찾아서 Ioc컨테이너를 만듬  -->
+            <param-value>classpath:bitcamp/pms/config/app-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>app</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+    
+    <!-- JSON 데이터를 처리할 프론트 컨트롤러 설정  서블릿마다 각자 자신의 IoC컨테이너를 생성가능 ,공통 기능 contextLoaderListener에서 가져다쓸수있음-->
+    <servlet>
+        <servlet-name>json</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <!--설정이 저장된 곳 을 찾아서 Ioc컨테이너를 만듬  -->
+            <param-value>classpath:bitcamp/pms/config/json-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>json</servlet-name>
+        <url-pattern>/json/*</url-pattern>
+    </servlet-mapping>
+<welcome-file-list>
+
+<welcome-file>index.html</welcome-file>
+
+<welcome-file>index.xhtml</welcome-file>
+
+<welcome-file>index.htm</welcome-file>
+
+<welcome-file>index.jsp</welcome-file>
+
+</welcome-file-list>
+
+
+</web-app>

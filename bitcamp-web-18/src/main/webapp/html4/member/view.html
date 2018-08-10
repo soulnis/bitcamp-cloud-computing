@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 보기</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+<div class="container">
+
+	<h1>멤버 보기</h1>
+	
+	<form>
+        <div class="form-group row">
+		    <label for="eId" class="col-sm-2 col-form-label">아이디</label>
+		    <div class="col-sm-5">
+		      <input type="text" class="form-control" id="eId" placeholder="아이디" readonly="readonly">
+		    </div>
+        </div>
+        <div class="form-group row">
+            <label for="eEmail" class="col-sm-2 col-form-label">이메일</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="eEmail" placeholder="이메일">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="ePassword" class="col-sm-2 col-form-label">암호</label>
+            <div class="col-sm-4">
+              <input type="password" class="form-control" id="ePassword" placeholder="암호">
+            </div>
+        </div>
+		
+        <div class="form-group row">
+		    <div class="col-sm-10">
+			    <button type="button" id="eListBtn" class="btn btn-primary btn-sm">목록</button>
+	            <button id="eAddBtn" type="button" class="newform btn btn-primary btn-sm">등록</button>
+	            <button id="eUpdateBtn" type="button" class="viewform btn btn-primary btn-sm">변경</button>
+	            <button id="eDeleteBtn" type="button" class="viewform btn btn-primary btn-sm">삭제</button>
+		    </div>
+        </div>
+	</form>
+
+</div> <!-- .container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="../js/jquery.bit.js"></script>
+<script>
+"use strict"
+
+var data = null;
+//객체에서 필요한것만 뽑아내서 변수에 담는방법 분해하는법 계체는 var {}, 배열은 var [];
+var {id,page,size} = $.parseQuery(location.href);
+
+
+if(id == undefined){// 입력 폼
+    $('.viewform').css('display','none');
+    
+    //오리지날함수에 없는 것을 제이쿼리를 통과시켜서 함수를 쓸수있게한다.
+    $(eId).removeAttr("readonly");
+} else { // 상세보기 폼
+    $('.newform').css('display','none');
+	
+	$.getJSON(`../../json/member/view/${id}`
+	        ,function(result){ // 성공시 실행되는 콜백함수
+	            data = result; // json데이터로 받아옴
+	            if(data.member == null){
+	                alert('아이다 유효하지 않습니다.');
+	                location.href = 'list.html'
+	                return;
+	            }
+	            $(eId).val(data.member.id);
+	            $(eEmail).val(data.member.email);
+	    
+	        });
+};
+
+$(eListBtn).click(function(){
+    if(page){
+        console.log(1);
+        location.href = `list.html?page=${page}&size=${size}`;
+    }else{
+        console.log(2);
+        location.href = 'list.html';
+    }
+});
+//post ajax통신
+$(eUpdateBtn).click(function(){
+/*     $.ajax('../../json/member/update', { //1번쨰 파라미터는 url
+         method : 'POST',                 //2번쨰 파라미터는 객체
+         data :{id: $(eId).val(),    
+             email: $(eEmail).val() ,
+             passwonrd: $(ePassword).val() },
+         success :  function(data){ 
+             if(data.status == 'success'){
+             location.href = `list.html?page=${page}&size=${size}`;
+             } else {
+                  alert('변경 오류입니다.');
+                  console.log(data.error);
+              }
+        }
+    
+    }); */
+    
+    $.post('../../json/member/update' // 1번째 파라미터 url
+            ,{ id: $(eId).val(), //  2번째 파라미터 데이터
+               email: $(eEmail).val() ,
+               passwonrd: $(ePassword).val(),
+             },
+             function(data){ //세번째 성공시 콜백함수
+                 console.log(data);
+                 if(data.status == 'success'){
+                 location.href = `list.html?page=${page}&size=${size}`;
+                  } else {
+                      alert('변경 오류입니다.');
+                      console.log(data.error);
+                  }
+            },
+            'json' // 4번째 파라미터 보낸는 데이터타입
+    ); 
+});
+
+$(eDeleteBtn).click(function(){
+    $.getJSON(`../../json/member/delete?id=${eId.value}`
+            ,function(data){
+				        if(data.status == 'success'){
+				            location.href = `list.html?page=${page}&size=${size}`;
+				        } else {
+				            alert('삭제 오류입니다.');
+				            console.log(data.error);
+				        }
+    });
+});
+
+$(eAddBtn).click(function(){
+    $.post('../../json/member/add',
+            { id: $(eId).val(), //  2번째 파라미터 데이터
+        email: $(eEmail).val() ,
+        passwonrd: $(ePassword).val()},
+        function(data){location.href = 'list.html';},
+        'json');
+
+});
+
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package bitcamp.pms.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import bitcamp.pms.Dao.BoardDAO;
 import bitcamp.pms.domain.Board;
+import bitcamp.pms.service.BoardService;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
 
-    @Autowired BoardDAO boardDao;
+    @Autowired BoardService boardService;
 
     @RequestMapping("list")
-    public String list(Model model) throws Exception {
-            List<Board> list =boardDao.selectList();
+    public String list(@RequestParam(defaultValue="1") int page,
+            @RequestParam(defaultValue="3") int size,Model model) throws Exception {
+            
+            if(page < 1) page = 1;
+            if(size <1 ||size >20) size = 3;
+             
+            HashMap<String,Object> map = new HashMap<>();
+            
+            List<Board> list =boardService.selectList(size,page);
             model.addAttribute("list", list);
             return "board/list";
     }
@@ -36,14 +45,14 @@ public class BoardController {
     @PostMapping("add")
     public String add(Board board) throws Exception {
      
-        boardDao.insert(board);
+        boardService.insert(board);
         return "redirect:list";
     
     }
     
     @RequestMapping("delete")
     public String delete(int no) throws Exception {
-        boardDao.delete(no);
+        boardService.delete(no);
         return "redirect:list";
     }
     
@@ -51,7 +60,7 @@ public class BoardController {
     public String update(Board board) throws Exception {
      
         System.out.println(board.getContent());
-           if(boardDao.update(board) == 0) {
+           if(boardService.update(board) == 0) {
                return "board/updatefail";
            }else {
                return "redirect:list";
@@ -61,7 +70,7 @@ public class BoardController {
     @RequestMapping("view/{no}")
     public String view(@PathVariable int no,Model model ) throws Exception {
         //PrintWriter객체는 출력 
-        Board board = boardDao.selectOne(no);
+        Board board = boardService.selectOne(no);
         model.addAttribute("board", board);
         return "board/view";
         }

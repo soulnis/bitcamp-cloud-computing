@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>멤버 목록</title>
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/common.css">
+</head>
+<body>
+<div class="container">
+
+	<h1>멤버 목록</h1>
+	<p><a href='view.html'  class="btn btn-secondary">새회원</a></p>
+	<table id="eListTable" border='1' class="table table-hover" >
+		<thead>
+			<tr>
+			    <th>아이디</th><th>이메일</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<div>
+		<button id="ePrevBtn" class="btn btn-outline-primary btn-sm">이전</button>
+		<span id="ePageNo">1</span>
+		<button id="eNextBtn" class="btn btn-outline-primary btn-sm">다음</button>
+	</div>
+  
+</div> <!-- .container -->
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/jquery.bit.js"></script>
+<script src="list.js"></script>
+</body>
+</html>

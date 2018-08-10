@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<h1>로그인</h1>
+<form action="#" method="post">
+이메일 : <input type="email" name="email" id="eEmail" placeholder="이메일입력 입력해주세요.">
+패스워드 : <input type="password" name="password" id="ePassword" placeholder="패스워드를 입력해주세요.">
+<button type="button" id="btn">로그인</button>
+</form>
+<script>
+$('#btn').on("click",function(e){
+    console.log($(eEmail).val());
+    console.log($(ePassword).val());
+    
+     $.post('/bitcamp-assignment-01/app/member/login' // 1번째 파라미터 url
+            ,{ email: $(eEmail).val(), //  2번째 파라미터 데이터
+               password: $(ePassword).val(),
+             },
+             function(data){ //세번째 성공시 콜백함수
+                if(data == 'SUCCESS'){
+                  console.log("성공");
+                  location.href = `content.html`;
+                  } else {
+                    alert('로그인 오류입니다.');
+                  } 
+            },
+            'text' // 4번째 파라미터 보낸는 데이터타입
+    ); 
+}); 
+
+
+</script>
+</body>
+</html>

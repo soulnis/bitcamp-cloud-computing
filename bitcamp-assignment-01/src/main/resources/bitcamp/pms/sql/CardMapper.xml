@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.pms.dao.Carddao">
+  
+  <insert id="insert" parameterType="card" useGeneratedKeys="true" keyProperty="no">
+	  insert into card(name,mobile,phone,fax,email,memo)
+	  values(#{name},#{mobile},#{phone},#{fax},#{email},#{memo})
+  </insert>
+  
+  <select id="nameList" resultType="card" parameterType="card">
+    select name,no
+    from card 
+    where forno = 1
+  </select>
+  
+  <select id="cardView" parameterType="card" resultType="card">
+    select *
+    from card 
+    where no = ${no}
+   </select>
+   
+  <update id="cardUpdate" parameterType="card" >
+  update card
+  set name=#{name},mobile=#{mobile},phone=#{phone},fax=#{fax},email=#{email},memo=#{memo}
+  where no = #{no}
+  </update>
+  
+  <select id="search" parameterType="string" resultType="card">
+    select name,no
+    from card
+    where name LIKE CONCAT ('%', #{value}, '%')
+  </select>
+  
+  <delete id="delete" parameterType="int">
+    delete from card 
+    where no = #{value};
+  </delete>
+</mapper>

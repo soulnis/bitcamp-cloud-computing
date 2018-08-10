@@ -4,22 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bitcamp.pms.Dao.BoardDAO">
   
-  <select id="selectList" resultType="bitcamp.pms.domain.Board">
-	  select bno,titl title,cdt 
+  <select id="selectList" resultType="board" parameterType="map">
+	  select bno,titl title,cdt as cnt 
 	  from pms2_board
+  <if test="startIndex != null and pageSize != null">
+      limit #{startIndex},#{pageSize}
+  </if>
   </select>
   
-  <select id="selectOne" resultType="bitcamp.pms.domain.Board" parameterType="int">
-	  select bno,titl title,cont content,cdt 
+  <select id="selectOne" resultType="board" parameterType="int">
+	  select bno,titl title,cont content,cdt cnt
 	  from pms2_board where bno=#{value}
   </select> 
   
-  <insert id="insert" parameterType="bitcamp.pms.domain.Board">
+  <insert id="insert" parameterType="board">
 	  insert into pms2_board(titl,cont,cdt)
 	  values(#{title},#{content},now())
   </insert>
  
-  <update id="update" parameterType="bitcamp.pms.domain.Board">
+  <update id="update" parameterType="board">
 	 update pms2_board 
 	 set titl=#{title}, cont=#{content}, cdt=now() where bno=#{bno}
   </update>
@@ -28,4 +31,10 @@
   delete from pms2_board 
   where bno=#{value}
   </delete>
+  
+  <select id="countAll" resultType="int">
+  select count(bno)
+  from pms2_board
+  </select>
+  
 </mapper>

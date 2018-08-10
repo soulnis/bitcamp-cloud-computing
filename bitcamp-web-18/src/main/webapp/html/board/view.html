@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>게시물 보기</title>
+</head>
+<body>
+<h1>게시물 보기</h1>
+<form action='../update' id="form1" method='post'>
+<table border='1'>
+
+
+
+<tr><th>번호</th><td>
+    <input type='text' name='bno' value='' id="eNo" readonly></td></tr>
+<tr><th>제목</th>
+    <td><input type='text' name='title' id="eTitle"value=''></td></tr>
+<tr><th>내용</th>
+    <td><textarea name='content' rows='10' id="eContent" cols='60'></textarea></td></tr>
+<tr><th>등록일</th><td id="eDate"></td></tr>
+
+
+</table>
+<p>
+<button id="listBtn" type="button" >목록</button>
+<button id="updateBtn" type="button" class="viewform">변경</button>
+<button id="deleteBtn" type="button" class="viewform">삭제</button>
+<button id="addBtn" type="button" class="newform">등록</button>
+
+</p>
+</form>
+<script src="../js/common.js"></script>
+<script>
+"use strict"
+var data = null;
+var {bno} = parseQuery(location.href);
+
+if (bno == undefined){
+   var el = document.querySelectorAll('.viewform');
+   for (var e of el){
+       e.style.display = 'none';
+   }
+}else{
+    var el = document.querySelectorAll('.newform');
+    for (var e of el){
+        e.style.display = 'none';
+    }
+    
+   var xhr = new XMLHttpRequest();
+   
+   xhr.onreadystatechange = function(){
+       if (xhr.readyState < 4) return;
+       if (xhr.status !== 200){
+           return;
+       }
+       
+       if (xhr.status == 200){
+          console.log(xhr.responseText);
+           data = JSON.parse(xhr.responseText);
+          
+             eNo.value =data.board.bno;
+             eTitle.value = data.board.title;
+             eContent.value = data.board.content;
+             eDate.innerHTML = data.board.cnt;
+           }
+       }
+   
+    
+    xhr.open('GET',`../../json/board/view/${bno}`,true);
+    
+    xhr.send();
+}
+
+listBtn.onclick = function(){
+   location.href = "list.html";
+}
+
+updateBtn.onclick = function(){
+   var xhr = new XMLHttpRequest();
+   xhr.onreadystatechange = function(){
+       if(xhr.readyState < 4) return;
+       if(xhr.status !== 200){
+           alert("서버에서 오류발생");
+           return;
+       }
+       if(xhr.status == 200){
+          
+           let data = JSON.parse(xhr.responseText); //JSON은 자바스크립트 객체로 변환해줌
+           if(data.status == 'success'){
+               location.href ='list.html';
+           } else {
+               alert('변경 오류입니다.');
+               console.log(data.error);
+           }
+       }
+   }
+   xhr.open('POST','../../json/board/update',true);
+   xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+   xhr.send(`bno=${eNo.value}&title=${eTitle.value}&Content=${eContent.value}`);
+    
+}
+
+deleteBtn.onclick = function(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200){
+            alert("서버에서 오류발생");
+            return;
+        }
+        if(xhr.status == 200){
+           
+            let data = JSON.parse(xhr.responseText); //JSON은 자바스크립트 객체로 변환해줌
+            if(data.status == 'success'){
+                location.href ='list.html';
+            } else {
+                alert('변경 오류입니다.');
+                console.log(data.error);
+            }
+        }
+    }
+    xhr.open('GET',`../../json/board/delete?bno=${eNo.value}`,true);
+    xhr.send();
+     
+}
+
+addBtn.onclick = function(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState < 4) return;
+        if(xhr.status !== 200){
+            alert("서버에서 오류발생");
+            return;
+        }
+        if(xhr.status == 200){
+            location.href ='list.html';
+        }
+    }
+    xhr.open('POST','../../json/board/add',true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send(`title=${eTitle.value}&Content=${eContent.value}`);
+     
+}
+
+</script>
+</body>
+</html>

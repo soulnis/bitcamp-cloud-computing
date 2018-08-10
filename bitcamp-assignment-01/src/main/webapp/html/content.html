@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<meta charset="UTF-8">
+<title>개인 명함 관리</title>
+<style type="text/css">
+#content{
+    height: 500px;
+    border: 1px solid gray;
+}
+#right{
+    float: left;
+     height:498px;
+    width: 200px;
+    border: 1px solid gray;
+}
+#logout{
+    position:relative;
+    top:-10px;
+    left:740px;
+}
+#updateBtn{
+    position:relative;
+    left: 550px;
+}
+</style>
+</head>
+
+<body>
+<h3>개인 명함 관리</h3>
+
+<a href="#" id="logout">로그아웃</a>
+
+<div id="content">
+    <div id="right"><div id="nav">
+    <input type="text" data-min-width="60" data-min-height="30" data-text-content="true" value="" style="color: rgb(94, 94, 94);" id="search">
+    </div></div>
+    <div id="left"></div>
+</div>
+<a href="#" id="remove">회원탈퇴</a>
+</body>
+<script id="tr-template-src"  type="text/x-handlebars-template">
+<form>
+<div > 이름  </div> <div><input type="text" id="eName" }</div>
+<div> 휴대전화</div> <div><input type="text" id="eMobile"></div>
+<div> 일반전화   </div><div><input type="text" id="ePhone"></div>
+<div> 팩스  </div><div><input type="text" id="eFax"></div>
+<div> 이메일  </div><div><input type="text" id="eEmail"></div>
+<div> 메모  </div><div><textarea rows="" cols="" name="" id="eMemo"></textarea></div>
+<button  type="button" id="confirmBtn">확인</butto>
+<button type="button" id="cancleBtn">취소</butto>
+</form>
+</script>
+<script id="tr-template-src2"  type="text/x-handlebars-template">
+<button id="updateBtn">편집</button>
+<form>
+<div > 이름  </div> <div><input type="text" id="eName" value="{{name}}" readonly class="form"></div>
+<div> 휴대전화</div> <div><input type="text" id="eMobile" value="{{mobile}}" readonly class="form"></div>
+<div> 일반전화   </div><div><input type="text" id="ePhone" value="{{mobile}} " readonly class="form"></div>
+<div> 팩스  </div><div><input type="text" id="eFax" value="{{fax}}" readonly class="form">   </div>
+<div> 이메일  </div><div><input type="text" id="eEmail" value="{{email}}" readonly class="form">   </div>
+<div> 메모  </div><div><textarea rows="" cols="" name="" id="eMemo" readonly class="form">{{memo}}</textarea></div>
+<button  type="button" id="addBtn">추가</button>
+<button type="button" id="deleteBtn">삭제</button>
+</form>
+</script>
+<script id="name-template-src"  type="text/x-handlebars-template">
+{{#each list}}
+<div>
+<a href="#" data-id='{{no}}' class="nameTag">{{name}}</a>
+</div>
+{{/each}}
+</script>
+<script>
+
+$('#left').on("click","#confirmBtn",function(){
+    $.post('/bitcamp-assignment-01/app/card/insert' // 1번째 파라미터 url
+            ,{ email: $(eEmail).val(), //  2번째 파라미터 데이터
+               name: $(eName).val() ,
+               mobile: $(eMobile).val(),
+               phone: $(ePhone).val(),
+               fax: $(eFax).val(),
+               memo: $(eMemo).val()
+             },
+             function(data){ //세번째 성공시 콜백함수
+                 console.log(data);
+                  if(data != 0){
+                      var name = $(eName).val()
+                     var str =$('<div>').html(`<a href='#' data-id='${data}'>${name}</a>`);
+                    $('#nav').append(str);
+                    
+                  } else {
+                      alert('변경 오류입니다.');
+                  } 
+            }
+            ,'text' // 4번째 파라미터 보낸는 데이터타입
+    ); 
+})
+
+$('#left').on("click","#cancleBtn",function(){
+    cardView();
+});
+
+$('#logout').on("click",(e)=>{
+   e.preventDefault();
+   
+   $.ajax({
+       type : 'GET',
+       url : '/bitcamp-assignment-01/app/member/logout',
+       success : function(result){
+           if(result === "SUCCESS") {
+               location.href="login.html"
+           };          
+       }, 
+       error : function() {
+           alert('통신 에러가 발생했습니다.'); 
+       }
+   });
+});
+
+$(remove).on('click',function(e){
+   e.preventDefault();
+    
+   var anser = confirm("진짜로 탈퇴하시겠습니까?");
+  
+   if(anser === true){
+    $.ajax({
+        type : 'GET',
+        url : '/bitcamp-assignment-01/app/member/delete',
+        success : function(result){
+            if(result === "SUCCESS") {
+                location.href="login.html"
+            };          
+        }, 
+        error : function() {
+            alert('통신 에러가 발생했습니다.'); 
+        }
+    });
+   } else{
+       console.log("아무것도 아닙니다 ㅎㅎㅎㅎ");
+   }
+    
+})
+    nameList();
+    
+var nameTemplateSrc = $('#name-template-src').text();
+var nameTemplateFn = Handlebars.compile(nameTemplateSrc)  
+function nameList(){
+$.getJSON('/bitcamp-assignment-01/app/card/namelist'
+         ,function(){console.log("로딩 성공!")}).done(function(result){
+             console.log(result);
+             $('#nav').append(nameTemplateFn({list:result}));
+    });
+}
+
+var trTemplateSrc2 = $('#tr-template-src2').text();
+var trTemplateFn2 = Handlebars.compile(trTemplateSrc2);
+
+var no=0;
+var temptag = null;
+
+$('#nav').on("click",(e)=>{
+    e.preventDefault();
+    no = $(e.target).data('id');
+    temptag = $(e.target);
+    if(e.target.className != 'nameTag')
+        return;
+    cardView();
+});
+
+$('#left').on("click","#addBtn",function(){
+    var trTemplateSrc = $('#tr-template-src').text();
+    var trTemplateFn = Handlebars.compile(trTemplateSrc)
+    $('#left').html('');
+    $('#left').append(trTemplateFn());
+});
+
+
+$('#left').on("click","#updateBtn",()=>{
+    $('.form').removeAttr('readonly');
+    $('#addBtn').remove();
+    $('#deleteBtn').remove();
+    $('#left').append($('<button id="formupdateBtn">').text('변경'));
+    $('#left').append($('<button id="cancleupdateBtn">').text('취소'));
+})
+
+$('#left').on("click","#deleteBtn",()=>{
+    
+    $.ajax({
+        type : 'GET',
+        url : '/bitcamp-assignment-01/app/card/delete',
+        data : {no : no},
+        success : function(result){
+            if(result === "SUCCESS") {
+                console.log("성공");
+            };          
+        }, 
+        error : function() {
+            alert('통신 에러가 발생했습니다.'); 
+        }
+    });
+})
+
+$('#left').on("click",'#formupdateBtn',()=>{
+    $.post('/bitcamp-assignment-01/app/card/update' // 1번째 파라미터 url
+            ,{ email: $(eEmail).val(), //  2번째 파라미터 데이터
+               name: $(eName).val() ,
+               mobile: $(eMobile).val(),
+               phone: $(ePhone).val(),
+               fax: $(eFax).val(),
+               memo: $(eMemo).val(),
+               no : no
+             },
+             function(data){ //세번째 성공시 콜백함수
+                 console.log(data);
+            },'text' // 4번째 파라미터 보낸는 데이터타입
+    ); 
+});
+$('#left').on("click",'#cancleupdateBtn',()=>{
+    cardView();
+});
+
+$('#search').keyup(function(){
+    $.getJSON('/bitcamp-assignment-01/app/card/search'
+            ,{search : $('#search').val()}
+            ,function(){console.log("로딩 성공!")}).done(function(result){
+                console.log(result);
+                $('.nameTag').remove();
+                $('#nav').append(nameTemplateFn({list:result}));
+     });
+})
+
+function cardView(){
+    $.getJSON('/bitcamp-assignment-01/app/card/cardview'
+            ,{no: no}
+            ,function(){console.log("로딩 성공!")}).done(function(result){
+                $('#left').html('');
+                $('#left').append(trTemplateFn2(result));
+       });
+}
+</script>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<title>게시물 목록</title>
+</head>
+<body>
+<h1>게시물 목록33</h1>
+<p><a href='form'>새 글</a></p>
+<table border='1'>
+<tr>
+    <th>번호</th><th>제목</th><th>등록일</th>
+</tr>
+{{#each board}}
+<tr>
+<td>{{bno}}</td><td><a href='view?bno={{bno}}'>{{title}}</a></td><td></td>
+</tr>
+{{/each}}
+
+</table>
+</body>
+</html>
